@@ -1,0 +1,251 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+		<div class="section1">
+			<h2></h2>
+			<p>
+				blah blah blah&apos;
+			</p>
+		</div>
+		<h2 id=using_classes>Using Classes</h2>
+		<p>
+			After defining a class and its class methods, the next step is to produce a program that creates and uses 
+			objects of a class.The C++ goal is to make using classes as similar as possible to using the basic, built-in
+			types, such as <code class="inline">int</code> int and <code class="inline">char</code>.You can create a 
+			class object by declaring a <i>class variable</i> or using <code class="inline">new</code> to allocate an 
+			object of a class type.You can pass objects as arguments, return them as function return values, and assign
+			one object to another. C++ provides facilities for initializing objects, teaching 
+			<code class="inline">cin</code> and <code class="inline">cout</code> to recognize objects, and even 
+			providing automatic type conversions between objects of similar classes. 
+		</p>
+		<p>
+			Indeed, you&apos;ve already seen how to declare a class object and call a member function. 
+			<a href="#listing10-3">Listing 10.3</a> provides a program to use the interface and implementation files. It
+			creates a <code class="inline">Stock</code> object named <code class="inline">fluffy_the_cat</code>. The 
+			program is simple, but it tests the features built in to the class. To compile the complete program, compile
+			it with <code class="inline">stock00.cpp</code> and have <code class="inline">stock00.h</code> present in 
+			the same directory or folder.
+		</p>
+		<p class="code-block">
+			<code id="listing10-3">
+				// usestck0.cpp -- the client program<br>
+				// compile with stock00.cpp<br><br>
+				#include &lt;iostream&gl;<br>
+				#include "stock00.h"<br><br>
+				int main() {<br>
+				&ensp;&ensp;&ensp;Stock fluffy_the_cat;<br>
+				&ensp;&ensp;&ensp;fluffy_the_cat.acquire("NanoSmart", 20, 12.50);<br>
+				&ensp;&ensp;&ensp;fluffy_the_cat.show();<br>
+				&ensp;&ensp;&ensp;fluffy_the_cat.buy(15, 18.125);<br>
+				&ensp;&ensp;&ensp;fluffy_the_cat.show();<br>
+				&ensp;&ensp;&ensp;fluffy_the_cat.sell(400, 20.00);<br>
+				&ensp;&ensp;&ensp;fluffy_the_cat.show();<br>
+				&ensp;&ensp;&ensp;fluffy_the_cat.buy(300000, 40.125);<br>
+				&ensp;&ensp;&ensp;fluffy_the_cat.show();<br>
+				&ensp;&ensp;&ensp;fluffy_the_cat.sell(300000, 0.125);<br>
+				&ensp;&ensp;&ensp;fluffy_the_cat.show();<br><br>
+				&ensp;&ensp;&ensp;return 0;<br>
+				}
+			</code>
+		</p>	
+		<p>Here is the output of the program in <a href="#listing10-3">Listing 10.3</a>:</p>
+		<p class="code-block">
+			<code class="block" id="listing10-3-out">
+				Company: NanoSmart Shares: 20<br>
+				&ensp;Share Price: $12.5 Total Worth: $250<br>
+				Company: NanoSmart Shares: 35<br>
+				&ensp;Share Price: $18.125 Total Worth: $634.375<br>
+				You cannot sell more than you have! Transaction is aborted.<br>
+				Company: NanoSmart Shares: 35<br>
+				&ensp;Share Price: $18.125 Total Worth: $634.375<br>
+				Company: NanoSmart Shares: 300035<br>
+				&ensp;Share Price: $40.125 Total Worth: $1.20389e+007<br>
+				Company: NanoSmart Shares: 35<br>
+				&ensp;Share Price: $0.125 Total Worth: $4.375
+			</code>
+		</p>
+		<p>
+			Now That you&apos;ve tested <code class="inline">Stock</code> class, it is ready to be used as a 
+			user-defined type in other programs. The critical point in using the new type is to understand what the 
+			member functions do; you shouldn&apos;t have to think about the implementation details. See the following
+			sidebar, <a href="#client-server-model">&quot;The Client/Server Model&quot;</a>.
+		</p>
+		<p class="sidebar" id="client-server-model">
+			OOP programmers often discuss program design in terms of a <i>client/server model</i>. In this 
+			conceptualization, the client is a program that uses the class. The class declaration, including the class 
+			methods, constitute the server, which is a resource that is available to the programs that need it. The 
+			client uses the server through the publicly defined interface only. This means that the client&apos;s 
+			programmer&apos;s only responsibility, is to know that interface. The server&apos;s programmer&apos;s 
+			responsibility, is to see that the server reliably and accurately performs according to that interface. Any 
+			changes the server designer makes to the class design should be to details of implementation, not to the 
+			interface. This allows programmers to improve the client and the server independently of each other, without
+			changes in the server having unforeseen repercussions on the client&apos;s behavior.
+		</p>
+		<h2 id="changing-implementation">Changing the implementation</h2>
+		<p>
+			If the inconsistent formatting of the numbers in the <a href="#listing10-3-out">program output</a> is 
+			bothering you, you can refine an implementation while keeping the interface unchanged. The 
+			<code class="inline">ostream</code> class has the <code class="inline">setf()</code> member function that 
+			control the formatting of the output of the program. For example, you can avoid e-notation by using the 
+			<code class="inline">setf</code> method: 
+ 		</p>
+		<p>
+			<code>std::cout.setf(std::ios_base::fixed, std::ios_base::floatfield);</code>
+		</p>
+		<p>
+			This also sets a <i>flag</i> in the <code class="inline">cout</code> object instructing it to use 
+			fixed-point notation. Similarly, you can instruct the <code class="inline">cout</code> to show three places 
+			to the right of the decimal point when using fixed-point notation:  
+		</p>
+		<p>
+			<code>std::cout.precision(3);</code>
+		</p>
+		<p>
+			You&apos;ll find more details in <a href="ch17.html">Chapter 17, &quot;Input, Output, and Files.&quot;</a>
+		</p>
+		<p>
+			These tools can be used in the <code class="inline">show()</code> method, but you must be noticed that when 
+			changing a method, the changes should not affect other parts of the client program. The aforementioned 
+			format changes could affect subsequent output in the client program. Therefore, the polite thing for 
+			<code class="inline">show()</code> to do is to reset the formatting information to the state that existed 
+			before it was called. This can be done using return values for the setting statements:
+		</p>
+		<p>
+			<code>
+				// save preceding value for precision<br>
+				std::streamsize prec = std::cout.precision(3);<br> 
+				// store original flags<br>
+				std::ios_base::fmtflag orig = std::cout.setf(std::ios_base::fixed);<br>
+				...<br>
+				...<br>
+				// reset to old value of precision<br>
+				std::cout.precision(prec);<br>
+				// reset to preceding flags<br>
+				std::cout.setf(orig, std::ios_base::float_field)
+			</code>
+		</p>
+		<ul>
+			<li><code class="inline">fmtflags</code> is a type defined in the <code class="inline">ios_base</code> 
+			class, which is defined the <code class="inline">std</code> namespace. Hence the rather long type name for 
+			<code class="inline">orig</code>.</li>
+			<li>Second, <code class="inline">orig</code> holds all the flags, and the reset statement uses that 
+			information to reset information in the <code class="inline">floatfield</code> section, which includes flags
+			for fixed-point notation and scientific notations.</li>
+		</ul>
+		<p>
+			Putting this information to use, we can replace the <code class="inline">show()</code> definition in the 
+			implementation file with this:
+		</p>
+		<p class="code-block">
+			<code id="replace-for-show-0">
+				void Stock::show() {<br>
+				&ensp;&ensp;&ensp;// set format to #.### and save it<br>
+				&ensp;&ensp;&ensp;std::ios_base::fmtflags orig = std::cout.setf(std::ios_base::fixed,
+				std::ios_base::floatfield);<br>
+				&ensp;&ensp;&ensp;std::streamsize prec = std::cout.precision(3);<br>
+				&ensp;&ensp;&ensp;std::cout &lt;&lt; &quot;Company: &quot; &lt;&lt; company &lt;&lt; &quot; Shares: 
+				&quot; &lt;&lt; shares &lt;&lt; &apos;\n&apos; &lt;&lt; &quot; Share Price: $&quot; &lt;&lt; 
+				share_val;<br><br>
+				&ensp;&ensp;&ensp;// set format to #.##<br>
+				&ensp;&ensp;&ensp;std::cout.precision(2);<br>				
+				&ensp;&ensp;&ensp;std::cout &lt;&lt; &quot; Total Worth: $&quot; &lt;&lt; total_val &lt;&lt; 
+				&apos;\n&apos;;<br><br>
+				&ensp;&ensp;&ensp;// restore original format<br>
+				&ensp;&ensp;&ensp;std::cout.setf(orig, std::ios_base::floatfield);<br>
+				&ensp;&ensp;&ensp;std::cout.precision(prec);<br>
+				}
+			</code>
+		</p>
+		<p>
+			After this replacement and leaving the header file and client file unchanged, you can recompile the program.
+			Now the output would look like this:
+		</p>
+		<p class="code-block">
+			<code class="block" id="listing10-3-out">
+				Company: NanoSmart Shares: 20<br>
+				&ensp;Share Price: $12.500 Total Worth: $250.00<br>
+				Company: NanoSmart Shares: 35<br>
+				&ensp;Share Price: $18.125 Total Worth: $634.38<br>
+				You cannot sell more than you have! Transaction is aborted.<br>
+				Company: NanoSmart Shares: 35<br>
+				&ensp;Share Price: $18.125 Total Worth: $634.38<br>
+				Company: NanoSmart Shares: 300035<br>
+				&ensp;Share Price: $40.125 Total Worth: $1203894.38<br>
+				Company: NanoSmart Shares: 35<br>
+				&ensp;Share Price: $0.125 Total Worth: $4.38
+			</code>
+		</p>
+		<h3 id="review-story-sofar">Reviewing the Story of the class So Far</h3>
+		<p>
+			The first step in specifying a class design is to provide a <i>class declaration</i>. The class declaration 
+			is modeled after a structure declaration and can include <i>data members</i> and <i>function members</i>. 
+			The declaration has a <i>private</i> section, and members declared in that section can be accessed only 
+			through the member functions. The declaration also has a <i>public</i> section, and members declared there 
+			can be accessed directly by a program using class objects.
+		</p>
+		<p>
+			Typically, data members go into the private section and member functions go into the public section, so a 
+			typical class declaration has this form:
+		</p>
+		<code>
+			class <i>className</i> {<br>
+			&ensp;&ensp;&ensp;private:<br>
+			&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<i>data member declarations</i><br>
+			&ensp;&ensp;&ensp;public:<br>
+			&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<i>member function prototypes</i><br>
+			}
+		</code>
+		<p>
+			The contents of the public section constitute the abstract part of the design, the <i>public interface</i>. 
+			Encapsulating data in the private section protects the <i>integrity</i> of the data and is called 
+			data hiding. Thus, using a class is the C++ way of making it easy to implement the OOP features 
+			<i>abstraction</i>, <i>data hiding</i>, and <i>encapsulation</i>.
+		</p>
+		<p>
+			The second step in specifying a class design is to implement the class member functions. You can use a 
+			complete function definition instead of a function prototype in the class declaration, but the usual 
+			practice, except with very brief functions like <code class="inline">set_tot()</code> in 
+			<a href="#listing10-1">Listing10.1</a>, is to provide the function definitions separately. In that case, you
+			need to use the <i>scope-resolution operator</i> (<code class="inline">::</code>) to indicate to which class
+			a member function belongs. For example, suppose the <code class="inline">Bozo</code> class has a member 
+			function called <code class="inline">retort()</code> that returns a pointer to a 
+			<code class="inline">char</code>. The function header would look like this:
+		</p>
+		<code>
+		char * Bozo::retort()
+		</code>
+		<p>
+			In other words, <code class="inline">retort()</code> is not just a type <code class="inline">char *</code> 
+			function; it is a type <code class="inline">char *</code> function that belongs to the 
+			<code class="inline">Bozo</code> class. The full, or <i>qualified</i>, name of the function is 
+			<code class="inline">Bozo::retort()</code>. The name <code class="inline">retort()</code>, on the other 
+			hand, is an abbreviation of the qualified name, and it can be used only in certain circumstances, such as in
+			the code for the class methods.
+		</p>
+		<p>
+			Another way of describing this situation is to say that the name <code class="inline">rerort</code> has 
+			class scope, so the scope-resolution operator is needed to qualify the name when it is used outside the 
+			class declaration and a class method.
+		</p>
+		<p>
+			To create an object, which is a particular example of a class, you use the class name as if it were a type 
+			name:
+		</p>
+		<code> Bozo bozetta</code>
+		<p> This works because a class <i>is a user-defined type</i>.</p>
+		<p>
+			To invoke a class member function, or method, you need to use the <i>dot membership operator</i>
+			(<code class="inline">.</code>):
+		</p>
+		<code>cout &lt;&lt; bozetta.retort();</code>
+		<p>
+			This invokes the <code class="inline">retort()</code> member function, and whenever the code for that 
+			function refers to a particular data member, the function uses the value that member has in the 
+			<code class="inline">bozetta</code> object.
+		</p>
+		
+		
+	</body>
+</html>
